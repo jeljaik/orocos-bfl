@@ -46,15 +46,12 @@ It's most important features are:
 - Wrapper around matrix and RNG libraries, so you can use your own
   favourite matrix library.
   At 2004/03/02 wrappers exist for
-  =================================================
-  * The matrix/RNG wrapper library of LTIlib
+    * The matrix/RNG wrapper library of LTIlib
   <http://ltilib.sourceforge.net/doc/homepage/index.shtml>: a library
   with algorithms and data structures frequently used in image
   processing and computer vision.
-
-  * NEWMAT <http://www.robertnz.net/nm_intro.htm> Matrix Library
-  =================================================
-  * boost <http://www.boost.org/> RNG
+    * NEWMAT <http://www.robertnz.net/nm_intro.htm> Matrix Library
+    * boost <http://www.boost.org/> RNG
 
 
 - "Bayesian unifying Design".  This allows to incorporate any Bayesian
