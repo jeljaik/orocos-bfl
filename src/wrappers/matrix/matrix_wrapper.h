@@ -23,16 +23,18 @@
 
 // define
 #define use_namespace
-#define MyMatrix          MatrixWrapper::Matrix
-#define MyColumnVector    MatrixWrapper::ColumnVector
-#define MyRowVector       MatrixWrapper::RowVector
-#define MySymmetricMatrix MatrixWrapper::SymmetricMatrix
+#define MyMatrix           MatrixWrapper::Matrix
+#define MyColumnVector     MatrixWrapper::ColumnVector
+#define MyQuaternion       MatrixWrapper::Quaternion
+#define MyRowVector        MatrixWrapper::RowVector
+#define MySymmetricMatrix  MatrixWrapper::SymmetricMatrix
 
 namespace MatrixWrapper{
 
 class Matrix;
 class ColumnVector;
 class RowVector;
+class Quaternion;
 class SymmetricMatrix;
 
 /// Class Matrixwrapper
@@ -185,6 +187,9 @@ public:
   /// Ask Number of Columns
   virtual unsigned int columns() const = 0;
 
+  /// Operator = 
+  virtual MySymmetricMatrix& operator = (const MySymmetricMatrix& a) = 0;
+  
   /// Operator ()
   virtual double& operator()(unsigned int,unsigned int) = 0;
 

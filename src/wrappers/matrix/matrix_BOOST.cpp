@@ -329,6 +329,23 @@ MyMatrix MyMatrix::sub(int i_start, int i_end, int j_start , int j_end) const
   return submatrix;
 }
 
+void MyMatrix::setColumn ( const MatrixWrapper::ColumnVector& b, int i ) const
+{
+    BoostColumnVector& tmpCol = (BoostColumnVector&) b;
+    BoostMatrix& tmpThis = (BoostMatrix &) (*this);
+//     boost::numeric::ublas::column(tmpThis,i-1) = boost::numeric::ublas::column(tmpCol,0);
+    boost::numeric::ublas::column(tmpThis,i-1) = (BoostColumnVector) b;
+    cout << "DEBUGGING in matrix_BOOST.cpp :" << *this << endl;
+}
+
+// MyMatrix MyMatrix::eye(int dim)
+// {
+// //     MyMatrix identity(dim, dim);
+//     boost::numeric::ublas::identity_matrix<double> identity(dim);
+//     MyMatrix identityWrap(identity);
+//     return identityWrap;
+// }
+
 /////////////////////////////
 // CLASS SYMMETRIC MATRIX  //
 /////////////////////////////
@@ -553,6 +570,13 @@ MyMatrix MySymmetricMatrix::operator* (const MyMatrix &a) const
 
 
 // SYMMETRICMATRIX - SYMMETRICMATRIX operators
+MySymmetricMatrix& MySymmetricMatrix::operator=(const MySymmetricMatrix &a)
+{
+    BoostSymmetricMatrix& op1 = *this;
+    op1 = (BoostSymmetricMatrix)a;
+    return *this;
+}
+
 MySymmetricMatrix& MySymmetricMatrix::operator +=(const MySymmetricMatrix& a)
 {
   BoostSymmetricMatrix & op1 = (*this);

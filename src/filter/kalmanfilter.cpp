@@ -32,7 +32,7 @@ namespace BFL
     , _Sigma_temp(prior->DimensionGet(),prior->DimensionGet())
     , _Sigma_temp_par(prior->DimensionGet(),prior->DimensionGet())
   {
-    // create posterior dencity
+    // create posterior density
     _post = new Gaussian(*prior);
   }
 
@@ -90,6 +90,7 @@ namespace BFL
     // allocate measurement for z.rows() if needed
     AllocateMeasModel(z.rows());
 
+    // TODO Check how are H and CovrianceGet in test_non_linear
     (_mapMeasUpdateVariables_it->second)._postHT =   (Matrix)(_post->CovarianceGet()) * H.transpose() ;
     (_mapMeasUpdateVariables_it->second)._S_Matrix =  H * (_mapMeasUpdateVariables_it->second)._postHT;
     (_mapMeasUpdateVariables_it->second)._S_Matrix += (Matrix)R;

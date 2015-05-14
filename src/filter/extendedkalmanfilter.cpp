@@ -66,6 +66,7 @@ ExtendedKalmanFilter::AllocateMeasModelExt(const unsigned int& meas_dimension)
    if( _mapMeasUpdateVariablesExt_it == _mapMeasUpdateVariablesExt.end())
    {
        //variables with size z.rows() not allocated yet
+       // TODO This is not the most efficient way to insert an element in the map check second method as done in http://www.cplusplus.com/reference/map/map/insert/
        _mapMeasUpdateVariablesExt_it = (_mapMeasUpdateVariablesExt.insert
            (std::pair<unsigned int, MeasUpdateVariablesExt>( meas_dimension,MeasUpdateVariablesExt(meas_dimension,_x.rows()) ))).first;
     }

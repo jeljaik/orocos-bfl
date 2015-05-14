@@ -28,10 +28,12 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/vector_proxy.hpp>
 #include <boost/numeric/ublas/io.hpp>
+#include <boost/math/quaternion.hpp>
 
 
 #define BoostColumnVector boost::numeric::ublas::vector<double>
 #define BoostRowVector    boost::numeric::ublas::vector<double>
+#define BoostQuaternion   boost::math::quaternion<double>
 
 
 namespace MatrixWrapper
@@ -163,6 +165,22 @@ class RowVector : public BoostRowVector, public RowVector_Wrapper
   virtual MyColumnVector transpose() const;
   virtual double operator*(const MyColumnVector& a) const;
 
+};
+
+/// Wrapper class for Quaternion (Boost implementation)
+class Quaternion : public BoostQuaternion
+{
+public:
+    // Constructors
+    Quaternion();
+    Quaternion(double q0, double q1, double q2, double q3);
+    Quaternion(MyColumnVector);
+    // Destructor
+    virtual ~Quaternion();
+    // Particular operators
+    double operator()(unsigned int i);
+//     double operator()(unsigned int i) const;
+    Matrix toRotation();
 };
 
 }

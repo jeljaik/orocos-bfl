@@ -175,6 +175,7 @@ namespace BFL
     {
       assert ( n_argument < _NumConditionalArguments );
       // index of conditional arguments of ConditionalPdf out of range
+      cout << "DEBUGGIN in in conditionalpdf.h " << argument << endl;
       this->_ConditionalArguments[n_argument]= argument;
     }
 

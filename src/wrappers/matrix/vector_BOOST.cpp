@@ -447,4 +447,62 @@ MyRowVector MyRowVector::sub(int j_start , int j_end) const
   return subvector;
 }
 
+///////////////////////////////////////////////////////////////////////
+////////////////////////////// QUATERNION /////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+// Constructors
+MyQuaternion::Quaternion() :  BoostQuaternion() {}
+
+MyQuaternion::Quaternion(double q0, double q1, double q2, double q3) :  BoostQuaternion(q0, q1, q2, q3)  {}
+
+MyQuaternion::Quaternion(MyColumnVector col) : BoostQuaternion(col(1), col(2), col(3), col(4)) { }
+// Destructors
+MyQuaternion::~Quaternion() {}
+
+// Operator ()
+double MyQuaternion::operator()(unsigned int i)
+{
+    BoostQuaternion& op1 = *(this);
+    if (i == 1)
+        return op1.R_component_1();
+    if (i == 2)
+        return op1.R_component_2();
+    if (i == 3)
+        return op1.R_component_3();
+    if (i == 4)
+        return op1.R_component_4();
+}
+
+
+// // Operator ()
+// double MyQuaternion::operator()(unsigned int i) const
+// {
+//     BoostQuaternion& op1 = *(this);
+//     if (i == 1)
+//         return op1.R_component_1();
+//     if (i == 2)
+//         return op1.R_component_2();
+//     if (i == 3)
+//         return op1.R_component_3();
+//     if (i == 4)
+//         return op1.R_component_4();
+// }
+
+// Quaternion to rotation
+MyMatrix MyQuaternion::toRotation() {
+    double q0 = (*this)(1);
+    double q1 = (*this)(2);
+    double q2 = (*this)(3);
+    double q3 = (*this)(4);
+    
+    MyMatrix Q(3,3);
+    Q(1,1) = 2*(q0*q0 + q1*q1) - 1; Q(1,2) = 2*(q1*q2 - q0*q3)     ; Q(1,3) = 2*(q1*q3 + q0*q2)    ;
+    Q(2,1) = 2*(q1*q2 + q0*q3)    ; Q(2,2) = 2*(q0*q0 + q2*q2) - 1 ; Q(2,3) = 2*(q2*q3 - q0*q1)    ;
+    Q(3,1) = 2*(q1*q3 - q0*q2)    ; Q(3,2) = 2*(q2*q3 + q0*q1)     ; Q(3,3) = 2*(q0*q0 + q3*q3) - 1;
+    
+    return Q;
+}
+
+
 #endif

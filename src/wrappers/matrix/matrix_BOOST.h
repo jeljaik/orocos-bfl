@@ -33,6 +33,7 @@
 #include <boost/numeric/ublas/storage.hpp>
 #include <boost/numeric/ublas/matrix_proxy.hpp>
 #include <boost/numeric/ublas/matrix_expression.hpp>
+#include <boost/math/quaternion.hpp>
 #include <assert.h>
 
 
@@ -103,6 +104,8 @@ class Matrix : public BoostMatrix, public Matrix_Wrapper
   virtual double determinant() const;
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
+  virtual void setColumn(const MyColumnVector &b, int i) const;
+//   virtual MyMatrix eye(int n);
 
 };
 
@@ -132,6 +135,7 @@ class SymmetricMatrix : public BoostSymmetricMatrix, public SymmetricMatrix_Wrap
   virtual MySymmetricMatrix transpose() const;
   virtual double determinant() const;
 
+  virtual MySymmetricMatrix& operator=(const MySymmetricMatrix &a);
   virtual double& operator()(unsigned int,unsigned int);
   virtual double operator()(unsigned int,unsigned int) const;
   virtual RowVector operator[](unsigned int)const;
