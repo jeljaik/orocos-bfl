@@ -336,7 +336,7 @@ namespace MatrixWrapper
  }
 
  void
- Matrix_Wrapper::toIdentity() const
+ Matrix_Wrapper::toIdentity()
  {
      // Check matrix is square
      assert(this->rows() == this->columns());
@@ -345,6 +345,5 @@ namespace MatrixWrapper
      // NOTE This can be used only after initializing the matrix and dimensions are known
      for (unsigned int i=0; i<this->rows(); i++)
          opl(i+1,i+1) = 1;
-     std::cout << "DEBUGGING in matrix_wrapper: New identity matrix is: " << opl << std::endl;
  }
 } //namespace

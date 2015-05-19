@@ -111,7 +111,7 @@ MyMatrix MyMatrix::operator/ (double a) const
 }
 
 MyMatrix&
-MyMatrix::operator =(const MySymmetricMatrix& a)
+MyMatrix::operator=(const MySymmetricMatrix& a)
 {
   *this =(MyMatrix) a;
 
@@ -157,6 +157,13 @@ MyMatrix & MyMatrix::operator-= (const MyMatrix& a)
   const BoostMatrix & op2 = a;
   op1 -= op2;
   return (MyMatrix &) op1;
+}
+
+MyMatrix& MyMatrix::operator =(const MyMatrix& a)
+{
+    BoostMatrix& op1 = *this;
+    op1 = (BoostMatrix)a;
+    return *this;
 }
 
 

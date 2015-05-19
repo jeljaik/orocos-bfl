@@ -117,7 +117,8 @@ public:
   /// MATRIX - MATRIX operator
   virtual MyMatrix operator* (const MyMatrix &a) const = 0;
 
-
+  /// MATRIX - MATRIX operator
+  virtual MyMatrix& operator=(const MyMatrix &a) = 0;
 
   /// MATRIX - VECTOR operator
   virtual MyColumnVector operator* ( const MyColumnVector &b) const = 0;
@@ -137,7 +138,7 @@ public:
   virtual MyMatrix pseudoinverse(double epsilon = 0.01 ) const;
   
   // Assigns ones to the diagonals of this matrix or turns an existing matrix into an identity one.
-  virtual void toIdentity() const;
+  virtual void toIdentity();
 
   /// get inverse
   virtual MyMatrix inverse() const = 0;
@@ -191,7 +192,7 @@ public:
   virtual unsigned int columns() const = 0;
 
   /// Operator = 
-  virtual MySymmetricMatrix& operator = (const MySymmetricMatrix& a) = 0;
+  virtual MySymmetricMatrix& operator= (const MySymmetricMatrix& a) = 0;
   
   /// Operator ()
   virtual double& operator()(unsigned int,unsigned int) = 0;

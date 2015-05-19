@@ -91,7 +91,8 @@ class Matrix : public BoostMatrix, public Matrix_Wrapper
   virtual MyMatrix operator+ (const MyMatrix &a) const;
   virtual MyMatrix operator- (const MyMatrix &a) const;
   virtual MyMatrix operator* (const MyMatrix &a) const;
-
+  virtual MyMatrix& operator=(const MyMatrix &a);
+  
   virtual MyColumnVector operator* ( const MyColumnVector &b) const;
 
   virtual MyRowVector rowCopy(unsigned int r) const;
