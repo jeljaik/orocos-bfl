@@ -54,6 +54,9 @@ public:
   /// Constructor
   ColumnVector(const MyColumnVector& a, const MyColumnVector& b);
 
+  /// Constructor
+  ColumnVector(const MyQuaternion& a);
+  
   /// Destructor
   virtual ~ColumnVector();
 
@@ -179,8 +182,9 @@ public:
     virtual ~Quaternion();
     // Particular operators
     double operator()(unsigned int i);
-//     double operator()(unsigned int i) const;
+    double operator()(unsigned int i) const;
     Matrix toRotation();
+    Quaternion normalize();
 };
 
 }

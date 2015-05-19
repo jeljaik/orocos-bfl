@@ -45,6 +45,17 @@ MyColumnVector::ColumnVector(const MyColumnVector& a, const MyColumnVector& b) :
     opl(a.rows() + i) = b(i+1);
 }
 
+MyColumnVector::ColumnVector(const MyQuaternion& quat) : BoostColumnVector(4)
+{
+    std::cout << "Quaternion in MyColumnVector::ColumnVector is: " << quat << std::endl;
+    std::cout << "First element: " << quat(1) << std::endl;
+    BoostColumnVector& opl = (*this);
+    // Copy elements from quaternion to column vector
+    unsigned int i;
+    for (i=0; i<4; i++)
+        opl(i) = quat(i+1);
+}
+
 // Destructor
 MyColumnVector::~ColumnVector(){}
 
@@ -474,22 +485,30 @@ double MyQuaternion::operator()(unsigned int i)
         return op1.R_component_4();
 }
 
-
-// // Operator ()
-// double MyQuaternion::operator()(unsigned int i) const
-// {
-//     BoostQuaternion& op1 = *(this);
-//     if (i == 1)
-//         return op1.R_component_1();
-//     if (i == 2)
-//         return op1.R_component_2();
-//     if (i == 3)
-//         return op1.R_component_3();
-//     if (i == 4)
-//         return op1.R_component_4();
-// }
+// Operator ()
+double MyQuaternion::operator()(unsigned int i) const
+{
+    const BoostQuaternion& op1 = *(this);
+    if (i == 1)
+        return op1.R_component_1();
+    if (i == 2)
+        return op1.R_component_2();
+    if (i == 3)
+        return op1.R_component_3();
+    if (i == 4)
+        return op1.R_component_4();
+}
 
 // Quaternion to rotation
+MyQuaternion MyQuaternion::normalize()
+{
+    std::cout << "Quaternion before normalization: " << *this << std::endl;
+    BoostQuaternion& op1 = *this;
+    op1 /= sqrt(boost::math::l1(op1));
+    
+    std::cout << "Quaternion after normalization: " << *this << std::endl;
+}
+
 MyMatrix MyQuaternion::toRotation() {
     double q0 = (*this)(1);
     double q1 = (*this)(2);
@@ -503,6 +522,5 @@ MyMatrix MyQuaternion::toRotation() {
     
     return Q;
 }
-
 
 #endif

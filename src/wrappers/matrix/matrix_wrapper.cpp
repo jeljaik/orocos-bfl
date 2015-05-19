@@ -335,4 +335,16 @@ namespace MatrixWrapper
    return V * Dinv * U.transpose();
  }
 
+ void
+ Matrix_Wrapper::toIdentity() const
+ {
+     // Check matrix is square
+     assert(this->rows() == this->columns());
+     MyMatrix& opl = *((MyMatrix*)(this));
+     opl = 0.0;
+     // NOTE This can be used only after initializing the matrix and dimensions are known
+     for (unsigned int i=0; i<this->rows(); i++)
+         opl(i+1,i+1) = 1;
+     std::cout << "DEBUGGING in matrix_wrapper: New identity matrix is: " << opl << std::endl;
+ }
 } //namespace

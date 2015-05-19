@@ -135,6 +135,9 @@ public:
 
   /// get pseudoinverse
   virtual MyMatrix pseudoinverse(double epsilon = 0.01 ) const;
+  
+  // Assigns ones to the diagonals of this matrix or turns an existing matrix into an identity one.
+  virtual void toIdentity() const;
 
   /// get inverse
   virtual MyMatrix inverse() const = 0;
