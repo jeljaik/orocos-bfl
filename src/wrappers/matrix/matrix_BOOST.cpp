@@ -261,7 +261,7 @@ double MyMatrix::determinant() const
   }
 }
 
-
+//FIX 
 MyMatrix MyMatrix::inverse() const
 {
   unsigned int r = this->rows();

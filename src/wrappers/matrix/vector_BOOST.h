@@ -25,6 +25,7 @@
 
 #include "matrix_wrapper.h"
 #include "vector_wrapper.h"
+#include "quaternion_wrapper.h"
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/vector_proxy.hpp>
 #include <boost/numeric/ublas/io.hpp>
@@ -171,7 +172,7 @@ class RowVector : public BoostRowVector, public RowVector_Wrapper
 };
 
 /// Wrapper class for Quaternion (Boost implementation)
-class Quaternion : public BoostQuaternion
+class Quaternion : public BoostQuaternion, public Quaternion_Wrapper
 {
 public:
     // Constructors
