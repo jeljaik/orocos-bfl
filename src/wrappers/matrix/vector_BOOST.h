@@ -177,7 +177,7 @@ class Quaternion : public BoostQuaternion, public Quaternion_Wrapper
 public:
     // Constructors
     Quaternion();
-    Quaternion(double q0, double q1, double q2, double q3);
+    Quaternion(double real, double i, double j, double z);
     Quaternion(MyColumnVector);
     // Destructor
     virtual ~Quaternion();

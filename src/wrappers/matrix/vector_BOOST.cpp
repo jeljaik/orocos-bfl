@@ -502,11 +502,8 @@ double MyQuaternion::operator()(unsigned int i) const
 // Quaternion to rotation
 MyQuaternion MyQuaternion::normalize()
 {
-    std::cout << "Quaternion before normalization: " << *this << std::endl;
     BoostQuaternion& op1 = *this;
-    op1 /= sqrt(boost::math::l1(op1));
-    
-    std::cout << "Quaternion after normalization: " << *this << std::endl;
+    op1 /= boost::math::abs(op1);
 }
 
 MyMatrix MyQuaternion::toRotation() {
