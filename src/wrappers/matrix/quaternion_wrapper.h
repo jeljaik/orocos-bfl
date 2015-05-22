@@ -19,8 +19,7 @@
 #ifndef __QUATERNION_WRAPPER_H__
 #define __QUATERNION_WRAPPER_H__
 
-
-
+#include <string>
 
 #define use_namespace
 #define MyColumnVector MatrixWrapper::ColumnVector
@@ -47,6 +46,12 @@ namespace MatrixWrapper{
         virtual MyMatrix toRotation() = 0;
         virtual MyQuaternion normalize() = 0;
         
+      /*
+       * \brief Converts quaternion to Euler Angles.
+       * @param[in]  axes is a string indicating the order of rotation as: 'xyz', 'xyx', 'xzx', 'xzy', 'yxy', 'yxz', 'yzx', 'yzy', 'zxy', 'zxz', 'zxy', 'zyz'.
+       * @param[out] output is a 3-dim ColumnVector with the corresponding Euler Angle vector in radians.
+       */
+        virtual bool getEulerAngles(std::string axes, MatrixWrapper::ColumnVector& output);
     }; // enf of Quaternion_Wrapper class
 } // end MatrixWrapper namespace
 
