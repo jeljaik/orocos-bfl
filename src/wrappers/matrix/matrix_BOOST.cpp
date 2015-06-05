@@ -342,17 +342,16 @@ void MyMatrix::setColumn ( const MatrixWrapper::ColumnVector& b, int i ) const
     BoostMatrix& tmpThis = (BoostMatrix &) (*this);
 //     boost::numeric::ublas::column(tmpThis,i-1) = boost::numeric::ublas::column(tmpCol,0);
     boost::numeric::ublas::column(tmpThis,i-1) = (BoostColumnVector) b;
-    cout << "DEBUGGING in matrix_BOOST.cpp :" << *this << endl;
+//     cout << "DEBUGGING in matrix_BOOST.cpp :" << *this << endl;
 }
 
-// MyMatrix MyMatrix::eye(int dim)
-// {
-// //     MyMatrix identity(dim, dim);
-//     boost::numeric::ublas::identity_matrix<double> identity(dim);
-//     MyMatrix identityWrap(identity);
-//     return identityWrap;
-// }
-
+void MyMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const 
+{
+    namespace bnu = boost::numeric::ublas;
+    BoostMatrix& tmpMat = (BoostMatrix&) b;
+    BoostMatrix& tmpThis = (BoostMatrix&) (*this);
+    bnu::project(tmpThis, bnu::range(i_start-1, i_end), bnu::range(j_start-1, j_end)) = tmpMat;
+}
 /////////////////////////////
 // CLASS SYMMETRIC MATRIX  //
 /////////////////////////////

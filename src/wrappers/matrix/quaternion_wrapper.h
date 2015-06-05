@@ -43,7 +43,6 @@ namespace MatrixWrapper{
         virtual double operator()(unsigned int i) = 0;
         virtual double operator()(unsigned int i) const = 0;
         // Others
-        virtual MyMatrix toRotation() = 0;
         virtual MyQuaternion normalize() = 0;
         
       /*
@@ -52,6 +51,8 @@ namespace MatrixWrapper{
        * @param[out] output is a 3-dim ColumnVector with the corresponding Euler Angle vector in radians.
        */
         virtual bool getEulerAngles(std::string axes, MatrixWrapper::ColumnVector& output);
+        
+        virtual bool getRotation(MatrixWrapper::Matrix& output);
     }; // enf of Quaternion_Wrapper class
 } // end MatrixWrapper namespace
 

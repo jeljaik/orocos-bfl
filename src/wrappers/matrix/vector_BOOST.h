@@ -184,7 +184,6 @@ public:
     // Particular operators
     double operator()(unsigned int i);
     double operator()(unsigned int i) const;
-    Matrix toRotation();
     Quaternion normalize();
 };
 

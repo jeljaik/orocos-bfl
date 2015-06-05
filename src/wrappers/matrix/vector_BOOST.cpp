@@ -47,8 +47,6 @@ MyColumnVector::ColumnVector(const MyColumnVector& a, const MyColumnVector& b) :
 
 MyColumnVector::ColumnVector(const MyQuaternion& quat) : BoostColumnVector(4)
 {
-    std::cout << "Quaternion in MyColumnVector::ColumnVector is: " << quat << std::endl;
-    std::cout << "First element: " << quat(1) << std::endl;
     BoostColumnVector& opl = (*this);
     // Copy elements from quaternion to column vector
     unsigned int i;
@@ -499,25 +497,10 @@ double MyQuaternion::operator()(unsigned int i) const
         return op1.R_component_4();
 }
 
-// Quaternion to rotation
 MyQuaternion MyQuaternion::normalize()
 {
     BoostQuaternion& op1 = *this;
     op1 /= boost::math::abs(op1);
-}
-
-MyMatrix MyQuaternion::toRotation() {
-    double q0 = (*this)(1);
-    double q1 = (*this)(2);
-    double q2 = (*this)(3);
-    double q3 = (*this)(4);
-    
-    MyMatrix Q(3,3);
-    Q(1,1) = 2*(q0*q0 + q1*q1) - 1; Q(1,2) = 2*(q1*q2 - q0*q3)     ; Q(1,3) = 2*(q1*q3 + q0*q2)    ;
-    Q(2,1) = 2*(q1*q2 + q0*q3)    ; Q(2,2) = 2*(q0*q0 + q2*q2) - 1 ; Q(2,3) = 2*(q2*q3 - q0*q1)    ;
-    Q(3,1) = 2*(q1*q3 - q0*q2)    ; Q(3,2) = 2*(q2*q3 + q0*q1)     ; Q(3,3) = 2*(q0*q0 + q3*q3) - 1;
-    
-    return Q;
 }
 
 #endif

@@ -106,6 +106,7 @@ class Matrix : public BoostMatrix, public Matrix_Wrapper
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
   virtual void setColumn(const MyColumnVector &b, int i) const;
+  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const;
 //   virtual MyMatrix eye(int n);
 
 };
