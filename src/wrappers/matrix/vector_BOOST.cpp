@@ -54,6 +54,15 @@ MyColumnVector::ColumnVector(const MyQuaternion& quat) : BoostColumnVector(4)
         opl(i) = quat(i+1);
 }
 
+// Constructor from pointer to double
+MyColumnVector::ColumnVector(const double* yvec, unsigned int size) : BoostColumnVector(size)
+{
+    BoostColumnVector& opl = (*this);
+    for (unsigned int i=0; i<size; i++)
+        opl(i) = yvec[i];
+}
+
+
 // Destructor
 MyColumnVector::~ColumnVector(){}
 

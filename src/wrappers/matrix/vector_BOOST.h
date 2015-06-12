@@ -58,6 +58,9 @@ public:
   /// Constructor
   ColumnVector(const MyQuaternion& a);
   
+  /// Constructor from pointer to double
+  ColumnVector(const double* y, unsigned int size);
+  
   /// Destructor
   virtual ~ColumnVector();
 

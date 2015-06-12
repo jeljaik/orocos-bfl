@@ -43,6 +43,9 @@ public:
 
   /// Constructor
   ColumnVector_Wrapper() {};
+  
+  /// Constructor from yarp vector
+  ColumnVector_Wrapper(double* yvec, unsigned int size);
 
   /// Destructor
   virtual ~ColumnVector_Wrapper() {};
