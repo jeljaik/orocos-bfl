@@ -478,6 +478,13 @@ MyQuaternion::Quaternion(MyColumnVector col) : BoostQuaternion(col(1), col(2), c
 // Destructors
 MyQuaternion::~Quaternion() {}
 
+// Copy constructor
+MyQuaternion::Quaternion(const MyQuaternion& q) :
+BoostQuaternion(q){}
+MyQuaternion::Quaternion(const BoostQuaternion & q) :
+BoostQuaternion(q){}
+
+
 // Operator ()
 double MyQuaternion::operator()(unsigned int i)
 {
@@ -506,10 +513,41 @@ double MyQuaternion::operator()(unsigned int i) const
         return op1.R_component_4();
 }
 
+MyQuaternion& MyQuaternion::operator =(const MyQuaternion &q)
+{
+    BoostQuaternion &op1 = *this;
+    op1 = (BoostQuaternion)q;
+    return *this;
+}
+
+MyQuaternion MyQuaternion::operator+ (const MyQuaternion &q) const
+{
+    return (MyQuaternion) ((BoostQuaternion)(*this) + (BoostQuaternion)q);
+}
+
+MyQuaternion MyQuaternion::operator- (const MyQuaternion &q) const
+{
+    return (MyQuaternion) ((BoostQuaternion)(*this) - (BoostQuaternion)q);
+}
+
 MyQuaternion MyQuaternion::normalize()
 {
     BoostQuaternion& op1 = *this;
     op1 /= boost::math::abs(op1);
+}
+
+bool MyQuaternion::conjugate(MyQuaternion& output)
+{
+    bool ret = false;
+    const BoostQuaternion &q = *(this);
+    // real part qw
+    double qw = q.R_component_1();
+    MyQuaternion qwQuat(qw, 0.0, 0.0, 0.0);
+    MyQuaternion qvQuat(0.0, q.R_component_2(), q.R_component_3(), q.R_component_4());
+    // Final conjugate
+    output = qwQuat - qvQuat;
+    ret = true;
+    return ret;
 }
 
 #endif

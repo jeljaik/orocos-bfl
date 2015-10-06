@@ -45,6 +45,10 @@ namespace MatrixWrapper{
         // Others
         virtual MyQuaternion normalize() = 0;
         
+        /// Operators
+        virtual MyQuaternion& operator =(const MyQuaternion &q) = 0;
+        virtual MyQuaternion operator+ (const MyQuaternion &q) const = 0;
+        virtual MyQuaternion operator- (const MyQuaternion &q) const = 0;
       /*
        * \brief Converts quaternion to Euler Angles.
        * @param[in]  axes is a string indicating the order of rotation as: 'xyz', 'xyx', 'xzx', 'xzy', 'yxy', 'yxz', 'yzx', 'yzy', 'zxy', 'zxz', 'zxy', 'zyz'.
@@ -53,6 +57,8 @@ namespace MatrixWrapper{
         virtual bool getEulerAngles(std::string axes, MatrixWrapper::ColumnVector& output);
         
         virtual bool getRotation(MatrixWrapper::Matrix& output);
+        
+        virtual bool conjugate(MyQuaternion& output) = 0;
     }; // enf of Quaternion_Wrapper class
 } // end MatrixWrapper namespace
 

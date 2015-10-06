@@ -676,5 +676,14 @@ MySymmetricMatrix::resize(unsigned int i, bool copy, bool initialize)
   temp.resize(i, copy);
 }
 
+void MySymmetricMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const 
+{
+    namespace bnu = boost::numeric::ublas;
+    BoostMatrix& tmpMat = (BoostMatrix&) b;
+    BoostSymmetricMatrix& tmpThis = (BoostSymmetricMatrix&) (*this);
+    bnu::project(tmpThis, bnu::range(i_start-1, i_end), bnu::range(j_start-1, j_end)) = tmpMat;
+}
+
+
 
 #endif

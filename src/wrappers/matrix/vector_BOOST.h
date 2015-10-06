@@ -182,12 +182,21 @@ public:
     Quaternion();
     Quaternion(double real, double i, double j, double z);
     Quaternion(MyColumnVector);
+    Quaternion(const MyQuaternion& q);
+    // Copy constructor for boost
+    Quaternion(const BoostQuaternion& q);
+    
     // Destructor
     virtual ~Quaternion();
-    // Particular operators
+    
+    /// Operators
     double operator()(unsigned int i);
     double operator()(unsigned int i) const;
+    virtual MyQuaternion& operator =(const MyQuaternion &q);
+    virtual MyQuaternion operator+ (const MyQuaternion &q) const;
+    virtual MyQuaternion operator- (const MyQuaternion &q) const;
     Quaternion normalize();
+    virtual bool conjugate(MyQuaternion& output);
 };
 
 }

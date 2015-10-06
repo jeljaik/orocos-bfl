@@ -20,6 +20,10 @@ namespace MatrixWrapper {
                 output(1) = atan2(2*y*z + 2*x*r, 1 - 2*pow(x,2) - 2*pow(y,2));
                 output(2) = asin(-2*x*z + 2*y*r);
                 output(3) = atan2(2*x*y + 2*z*r, 1 - 2*pow(y,2) - 2*pow(z,2));
+                // NOTE Reference http://bediyap.com/programming/convert-quaternion-to-euler-rotations/
+//                 output(1) = atan2(-2*x*y - 2*z*r, 1 - 2*pow(y,2) - 2*pow(z,2));
+//                 output(2) = asin(-2*x*z + 2*y*r);
+//                 output(3) = atan2(-2*z*y + 2*x*r, 1 - 2*pow(x,2) - 2*pow(y,2));
                 ret = true;
             } else
                 std::cout << "[quaternion_wrapper.cpp] Computation for axis order " << axes << " has not been implemented yet" <<  std::endl;
