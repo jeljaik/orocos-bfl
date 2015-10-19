@@ -35,6 +35,13 @@ IF (WIN32)
   ADD_DEFINITIONS( /D_SCL_SECURE_NO_DEPRECATE)
 ENDIF (WIN32)
 
+find_package(YCM REQUIRED)
+include(YCMDefaultDirs)
+
+include(AddInstallRPATHSupport)
+add_install_rpath_support(BIN_DIRS ${CMAKE_INSTALL_PREFIX}/bin
+                          LIB_DIRS ${CMAKE_INSTALL_PREFIX}/lib
+                          USE_LINK_PATH)
 
 # Set the build type (affects debugging symbols and optimization)
 # ---------------------------------------------------------------
