@@ -31,11 +31,11 @@ IF (BUILD_TESTS)
   TARGET_LINK_LIBRARIES( test_smoother orocos-bfl ${MATRIX_LIBS} ${RNG_LIBS} ${GINAC_LIBS} ${CPPUNIT_LIBS} )
   ADD_TEST( test_smoother test_smoother )
 
-  ADD_EXECUTABLE( test_complete_filter ${DO_EXCLUDE} test-runner.cpp approxEqual.cpp complete_filter_test.cpp complete_filter_test.hpp
-                  ${PROJ_SOURCE_DIR}/examples/mobile_robot.cpp ${PROJ_SOURCE_DIR}/examples/compare_filters/nonlinearanalyticconditionalgaussianmobile.cpp
-                  ${PROJ_SOURCE_DIR}/examples/discrete_filter/conditionalUniformMeasPdf1d.cpp )
-  TARGET_LINK_LIBRARIES( test_complete_filter orocos-bfl ${MATRIX_LIBS} ${RNG_LIBS} ${GINAC_LIBS} ${CPPUNIT_LIBS} )
-  ADD_TEST( test_complete_filter test_complete_filter )
+  #ADD_EXECUTABLE( test_complete_filter ${DO_EXCLUDE} test-runner.cpp approxEqual.cpp complete_filter_test.cpp complete_filter_test.hpp
+  #                ${PROJ_SOURCE_DIR}/examples/mobile_robot.cpp ${PROJ_SOURCE_DIR}/examples/compare_filters/nonlinearanalyticconditionalgaussianmobile.cpp
+  #                ${PROJ_SOURCE_DIR}/examples/discrete_filter/conditionalUniformMeasPdf1d.cpp )
+  #TARGET_LINK_LIBRARIES( test_complete_filter orocos-bfl ${MATRIX_LIBS} ${RNG_LIBS} ${GINAC_LIBS} ${CPPUNIT_LIBS} )
+  #ADD_TEST( test_complete_filter test_complete_filter )
 
 IF (GINAC_SUPPORT)
   ADD_EXECUTABLE( test_model_ginac ${DO_EXCLUDE} test-runner.cpp approxEqual.cpp model_test_ginac.cpp model_test_ginac.hpp)

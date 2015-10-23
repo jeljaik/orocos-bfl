@@ -244,5 +244,6 @@ public:
 #include "vector_NEWMAT.h"
 #include "vector_LTI.h"
 #include "vector_BOOST.h"
+#include "vector_EIGEN.h"
 
 #endif // __OROVECTOR__

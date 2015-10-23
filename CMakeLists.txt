@@ -35,6 +35,8 @@ IF (WIN32)
   ADD_DEFINITIONS( /D_SCL_SECURE_NO_DEPRECATE)
 ENDIF (WIN32)
 
+# Adding RPath support
+# ————————————————————
 find_package(YCM REQUIRED)
 include(YCMDefaultDirs)
 
@@ -64,6 +66,9 @@ IF (NOT LIBRARY_TYPE)
   SET( LIBRARY_TYPE shared CACHE STRING "What type of library to build: (shared, static or both)")
 ENDIF (NOT LIBRARY_TYPE)
 
+# Specific for Eigen3
+# ———————————————————
+LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 # find libs 
 # ----------
@@ -73,8 +78,6 @@ INCLUDE (${PROJ_SOURCE_DIR}/config/FindMATRIX.cmake)
 INCLUDE (${PROJ_SOURCE_DIR}/config/FindRNG.cmake)
 INCLUDE (${PROJ_SOURCE_DIR}/config/FindGINAC.cmake)
 INCLUDE (${PROJ_SOURCE_DIR}/config/FindCppUnit.cmake)
-
-
 # options to build tests and examples
 # -----------------------------------
 DEPENDENT_OPTION( BUILD_TESTS "Turn me off to disable the BFL functionality testing" ON "CPPUNIT_FOUND" OFF)
