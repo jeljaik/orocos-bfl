@@ -6,11 +6,14 @@
 
 #include "matrix_wrapper.h"
 #include "vector_wrapper.h"
+#include "quaternion_wrapper.h"
 
 #include <Eigen/Core>
+#include <Eigen/Geometry>
 
 typedef Eigen::VectorXd EigenColumnVector;
 typedef Eigen::RowVectorXd EigenRowVector;
+typedef Eigen::Quaterniond EigenQuaternion;
 
 
 namespace MatrixWrapper
@@ -158,6 +161,33 @@ class RowVector : public EigenRowVector, public RowVector_Wrapper
   virtual double operator*(const MyColumnVector& a) const;
 
 };
+    
+/// Wrapper class for Quaternion (Eigen implementation)
+class Quaternion : public EigenQuaternion, public Quaternion_Wrapper
+{
+public:
+    // Constructors
+    Quaternion();
+    Quaternion(double real, double i, double j, double z);
+    Quaternion(MyColumnVector);
+    Quaternion(const MyQuaternion& q);
+    // Copy constructor for boost
+    Quaternion(const EigenQuaternion& q);
+    
+    // Destructor
+    virtual ~Quaternion();
+    
+    /// Operators
+    double operator()(unsigned int i);
+    double operator()(unsigned int i) const;
+    virtual MyQuaternion& operator =(const MyQuaternion &q);
+    virtual MyQuaternion operator+ (const MyQuaternion &q) const;
+    virtual MyQuaternion operator- (const MyQuaternion &q) const;
+    Quaternion normalize();
+    virtual bool conjugate(MyQuaternion& output);
+};
+
+
 
 }
 

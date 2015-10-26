@@ -64,5 +64,6 @@ namespace MatrixWrapper{
 
 // Include implementations
 #include "vector_BOOST.h"
+#include "vector_EIGEN.h"
 
 #endif // _QUATERNION_WRAPPER_

@@ -364,16 +364,14 @@ double MyRowVector::operator* (const MyColumnVector &a) const
   return (op1 * op2)(0,0);
 }
 
-MyRowVector&
-MyRowVector::operator=(const MyRowVector &a)
+MyRowVector& MyRowVector::operator=(const MyRowVector &a)
 {
   EigenRowVector& op1 = *this;
   op1 = (EigenRowVector)a;
   return *this;
 }
 
-MyRowVector&
-MyRowVector::operator=(double a)
+MyRowVector& MyRowVector::operator=(double a)
 {
   EigenRowVector& op1 = *this;
   op1.setConstant(a);
@@ -385,5 +383,116 @@ MyRowVector MyRowVector::sub(int j_start , int j_end) const
   const EigenRowVector& op1 = *this;
   return MyRowVector(op1.segment(j_start-1,j_end-j_start+1));
 }
+
+///////////////////////////////////////////////////////////////////////
+////////////////////////////// QUATERNION /////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
+// Constructors
+MyQuaternion::Quaternion() :  EigenQuaternion() { }
+
+MyQuaternion::Quaternion(double real, double i, double j, double z) : EigenQuaternion( (const double) real, (const double) i, (const double) j, (const double) z) { }
+
+MyQuaternion::Quaternion(MyColumnVector col) : EigenQuaternion( col(1), col(2), col(3), col(4) ) { }
+
+// Destructor
+MyQuaternion::~Quaternion() { }
+
+// Copy constructor
+MyQuaternion::Quaternion( const MyQuaternion & q ) : EigenQuaternion( q ) { }
+MyQuaternion::Quaternion( const EigenQuaternion & q ) : EigenQuaternion( q ) { }
+
+// Operators
+double MyQuaternion::operator()( unsigned int i )
+{
+    EigenQuaternion & op1 = *(this);
+    switch (i) {
+        case 1:
+            return op1.w();
+            break;
+        case 2:
+            return op1.x();
+            break;
+        case 3:
+            return op1.y();
+            break;
+        case 4:
+            return op1.z();
+            break;
+        default:
+            std::cout << "[BFLERR] Index out of boundaries." << std::endl;
+            break;
+    }
+}
+
+double MyQuaternion::operator()( unsigned int i ) const
+{
+    const EigenQuaternion & op1 = *(this);
+    switch (i) {
+        case 1:
+            return op1.w();
+            break;
+        case 2:
+            return op1.x();
+            break;
+        case 3:
+            return op1.y();
+            break;
+        case 4:
+            return op1.z();
+            break;
+        default:
+            std::cout << "[BFLERR] Index out of boundaries." << std::endl;
+            break;
+    }
+}
+
+MyQuaternion& MyQuaternion::operator =(const MyQuaternion &q)
+{
+    EigenQuaternion & op1 = *this;
+    op1 = (EigenQuaternion)q;
+    return *this;
+}
+
+
+MyQuaternion MyQuaternion::operator+ (const MyQuaternion &q) const
+{
+    const EigenQuaternion & op1 = *(this);
+    const EigenQuaternion & op2 = q;
+    Eigen::Vector4d tmp(4); tmp.setZero();
+    tmp[1] = op1.w() + op2.w();                // real part sum
+    tmp.bottomRows(3) = op1.vec() + op2.vec(); // im part
+    EigenQuaternion result = EigenQuaternion(tmp.data());
+    return (MyQuaternion) result;
+}
+
+MyQuaternion MyQuaternion::operator- (const MyQuaternion &q) const
+{
+    const EigenQuaternion & op1 = *(this);
+    const EigenQuaternion & op2 = q;
+    Eigen::Vector4d tmp(4); tmp.setZero();
+    tmp[1] = op1.w() - op2.w();                // real part sum
+    tmp.bottomRows(3) = op1.vec() - op2.vec(); // im part
+    EigenQuaternion result = EigenQuaternion(tmp.data());
+    return (MyQuaternion) result;
+}
+
+MyQuaternion MyQuaternion::normalize()
+{
+    EigenQuaternion& op1 = *(this);
+    op1.normalize();
+}
+
+bool MyQuaternion::conjugate(MyQuaternion& output)
+{
+    bool ret = false;
+    const EigenQuaternion &q = *(this);
+    q.conjugate();
+    ret = true;
+    return ret;
+}
+
+
+
 
 #endif
