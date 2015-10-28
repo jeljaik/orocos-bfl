@@ -220,19 +220,58 @@ MyMatrix MyMatrix::inverse() const
 int
 MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
 {
-  // test if matrix is square matrix
-  assert(this->rows() == this->columns());
-
-  const EigenMatrix & A = (EigenMatrix &) (*this);
-  sym = MySymmetricMatrix(A.selfadjointView<Eigen::Upper>());
-  return 0;
+    // test if matrix is square matrix
+    assert(this->rows() == this->columns());
+    
+    // NOTE: What I'm tryin to do here is to recognize when a matrix is strictly lower or upper triangular
+    // making it symmetric accordingly.
+    
+    const EigenMatrix & A = (EigenMatrix &) (*this);
+    EigenMatrix tmp(sym.rows(), sym.cols());
+    
+    // Inspecting upper triangle
+    A.triangularView<Eigen::Upper>().evalTo(tmp);
+    // Extracting diagonal matrix
+    auto diagVec = tmp.diagonal();
+    auto diagMatVirtual = Eigen::DiagonalMatrix<double, Eigen::Dynamic>(diagVec);
+    EigenMatrix diagMatEigen(tmp.rows(),tmp.cols());
+    diagMatVirtual.evalTo(diagMatEigen);
+    std::cout << diagMatEigen << std::endl;
+    if ( (tmp - diagMatEigen).sum() == 0 )
+    {
+        std::cout << "This matrix is strictly lower triangular. Symmetrizing accordingly" << std::endl;
+        sym = MySymmetricMatrix(A.selfadjointView<Eigen::Lower>());
+    } else {
+        // If it's upper triangular
+        A.triangularView<Eigen::Lower>().evalTo(tmp);
+        diagVec = tmp.diagonal();
+        diagMatVirtual = Eigen::DiagonalMatrix<double, Eigen::Dynamic>(diagVec);
+        diagMatVirtual.evalTo(diagMatEigen);
+        if ( (tmp - diagMatEigen).sum() == 0 )
+        {
+            std::cout << "This matrix is strictly upper triangular. Symmetrizing accordingly"  << std::endl;
+            sym = MySymmetricMatrix(A.selfadjointView<Eigen::Upper>());
+        } else {
+            std::cout << " This matrix will be symmetrized averaging both triangular parts" << std::endl;
+        }
+    }
+    return 0;
 }
 
 void
 MyMatrix::resize(unsigned int i, unsigned int j, bool copy, bool initialize)
 {
+    // By default not a conservative resizing but destructive, unless resizing is equivalent to transposing
   EigenMatrix & temp = (EigenMatrix &) (*this);
-  temp.resize(i,j);
+    std::cout << temp << std::endl;
+    if (copy)
+    {
+        temp = temp.block(0,0,i,j).eval();
+    } else
+    {
+        temp.resize(i,j);
+    }
+    std::cout << temp << std::endl;
 }
 
 // get sub matrix
@@ -484,14 +523,20 @@ MyMatrix MySymmetricMatrix::sub(int i_start, int i_end, int j_start , int j_end)
 
 double& MySymmetricMatrix::operator()(unsigned int a, unsigned int b)
 {
-  EigenSymmetricMatrix & op1 = (*this);
-  return op1(a-1,b-1);
+    EigenSymmetricMatrix & op1 = (*this);
+    assert(a >= 0 && a < op1.rows()+1);
+    assert(b >= 0 && b < op1.cols()+1);
+    return op1(a-1,b-1);
 }
 
 double MySymmetricMatrix::operator()(unsigned int a, unsigned int b) const
 {
-  const EigenSymmetricMatrix & op1(*this);
-  return op1(a-1,b-1);
+    const EigenSymmetricMatrix & op1(*this);
+    assert(a >= 0 && a < op1.rows());
+    assert(b >= 0 && b < op1.cols());
+    EigenSymmetricMatrix op2(op1.rows(), op1.cols());
+    op1.selfadjointView<Eigen::Lower>().evalTo(op2);
+    return op2(a-1,b-1);
 }
 
 bool MySymmetricMatrix::operator==(const MySymmetricMatrix& a) const

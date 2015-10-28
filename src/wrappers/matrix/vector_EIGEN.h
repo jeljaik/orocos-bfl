@@ -7,7 +7,6 @@
 #include "matrix_wrapper.h"
 #include "vector_wrapper.h"
 #include "quaternion_wrapper.h"
-
 #include <Eigen/Core>
 #include <Eigen/Geometry>
 

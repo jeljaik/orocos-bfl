@@ -9,7 +9,7 @@
 
 #include <Eigen/Core>
 #include <assert.h>
-
+// NOTE: Storage in these types is column-major by default!
 typedef Eigen::MatrixXd EigenMatrix;
 typedef Eigen::MatrixXd EigenSymmetricMatrix;
 typedef Eigen::MatrixXd::ConstSelfAdjointViewReturnType<Eigen::Upper>::Type EigenSymmetricView;

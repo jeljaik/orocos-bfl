@@ -38,6 +38,7 @@
 
 
 typedef boost::numeric::ublas::matrix<double> BoostMatrix;
+// By default this is a row-major lower-triangular symmetric matrix
 typedef boost::numeric::ublas::symmetric_matrix<double, boost::numeric::ublas::lower> BoostSymmetricMatrix;
 
 namespace MatrixWrapper

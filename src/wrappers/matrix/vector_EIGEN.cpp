@@ -31,7 +31,8 @@ MyColumnVector::ColumnVector(const EigenColumnVector & a) :
 void MyColumnVector::resize(int num_rows)
 {
   EigenColumnVector & op1 = (*this);
-  op1.resize(num_rows);
+    op1.conservativeResize(num_rows);
+  //op1.resize(num_rows);
 }
 
 // Assign
@@ -224,7 +225,7 @@ MyRowVector::RowVector(const EigenRowVector & a) :
 void MyRowVector::resize(int num_columns)
 {
   EigenRowVector & op1 = (*this);
-  op1.resize(num_columns);
+  op1.conservativeResize(num_columns);
 }
 
 // Assign
