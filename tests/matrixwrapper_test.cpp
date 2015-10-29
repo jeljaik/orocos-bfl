@@ -111,15 +111,17 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     }
 
     // SYMMETRICMATRIX
-    std::cout << " Matrix REF: " << std::endl;
-    int i=0, j=0;
-    for (auto it = REF.begin(); it != REF.end(); ++it, ++i)
-    {
-        for (auto it2 = it->begin(); it2 != it->end(); ++it2, ++j)
-            std::cout << *it2 << " ";
-        std::cout << std::endl;
-    }
-    //
+    // Uncomment if needed
+//    std::cout << " Matrix REF: " << std::endl;
+//    int i=0, j=0;
+//    for (auto it = REF.begin(); it != REF.end(); ++it, ++i)
+//    {
+//        for (auto it2 = it->begin(); it2 != it->end(); ++it2, ++j)
+//            std::cout << *it2 << " ";
+//        std::cout << std::endl;
+//    }
+    
+    // Uncomment if needed. Special for Eigen
     //    // Operator () dummy test
     //    Eigen::MatrixXd m = Eigen::MatrixXd::Random(4,5);
     //    cout << "This is a random matrix: " << endl << m << endl;
@@ -135,7 +137,7 @@ void MatrixwrapperTest::testMatrixwrapperValue()
             Bs(i+1,j+1) = REF[i][j];
     }
 
-    Matrix symBs(Bs.rows(),Bs.cols());
+    Matrix symBs(Bs.rows(),Bs.columns());
     symBs = (Matrix) Bs;
     symBs.convertToSymmetricMatrix(Bs);
     for (unsigned int i=0; i<r; i++)
@@ -168,47 +170,55 @@ void MatrixwrapperTest::testMatrixwrapperValue()
 
     // COLUMNVECTOR
     ColumnVector Bc(r);
-    for (unsigned int i=0; i<r; i++){
-    Bc(i+1) = REF[0][i];
-    CPPUNIT_ASSERT_EQUAL(Bc(i+1), REF[0][i]);
+    for (unsigned int i=0; i<r; i++)
+    {
+        Bc(i+1) = REF[0][i];
+        CPPUNIT_ASSERT_EQUAL(Bc(i+1), REF[0][i]);
     }
     // ROWVECTOR
     RowVector Br(c);
-    for (unsigned int i=0; i<c; i++){
-    Br(i+1) = REF[0][i];
-    CPPUNIT_ASSERT_EQUAL(Br(i+1), REF[0][i]);
+    for (unsigned int i=0; i<c; i++)
+    {
+        Br(i+1) = REF[0][i];
+        CPPUNIT_ASSERT_EQUAL(Br(i+1), REF[0][i]);
     }
 
     // test operator =
     // MATRIX
     Am = Bm;
-    for (unsigned int i=0; i<r; i++){
-    for (unsigned int j=0; j<c; j++){
-      CPPUNIT_ASSERT_EQUAL(Am(i+1,j+1), REF[i][j]);
-      CPPUNIT_ASSERT_EQUAL(Bm(i+1,j+1), REF[i][j]);
-    }
+    for (unsigned int i=0; i<r; i++)
+    {
+        for (unsigned int j=0; j<c; j++)
+        {
+            CPPUNIT_ASSERT_EQUAL(Am(i+1,j+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(Bm(i+1,j+1), REF[i][j]);
+        }
     }
     // SYMMETRICMATRIX
     As = Bs;
-    for (unsigned int i=0; i<r; i++){
-    for (unsigned int j=0; j<=i; j++){
-      CPPUNIT_ASSERT_EQUAL(As(i+1,j+1), REF[i][j]);
-      CPPUNIT_ASSERT_EQUAL(Bs(i+1,j+1), REF[i][j]);
-      CPPUNIT_ASSERT_EQUAL(As(j+1,i+1), REF[i][j]);
-      CPPUNIT_ASSERT_EQUAL(Bs(j+1,i+1), REF[i][j]);
-    }
+    for (unsigned int i=0; i<r; i++)
+    {
+        for (unsigned int j=0; j<=i; j++)
+        {
+            CPPUNIT_ASSERT_EQUAL(As(i+1,j+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(Bs(i+1,j+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(As(j+1,i+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(Bs(j+1,i+1), REF[i][j]);
+        }
     }
     // COLUMNVECTOR
     Ac = Bc;
-    for (unsigned int i=0; i<r; i++){
-    CPPUNIT_ASSERT_EQUAL(Ac(i+1), REF[0][i]);
-    CPPUNIT_ASSERT_EQUAL(Bc(i+1), REF[0][i]);
+    for (unsigned int i=0; i<r; i++)
+    {
+        CPPUNIT_ASSERT_EQUAL(Ac(i+1), REF[0][i]);
+        CPPUNIT_ASSERT_EQUAL(Bc(i+1), REF[0][i]);
     }
     // ROWVECTOR
     Ar = Br;
-    for (unsigned int i=0; i<c; i++){
-    CPPUNIT_ASSERT_EQUAL(Ar(i+1), REF[0][i]);
-    CPPUNIT_ASSERT_EQUAL(Br(i+1), REF[0][i]);
+    for (unsigned int i=0; i<c; i++)
+    {
+        CPPUNIT_ASSERT_EQUAL(Ar(i+1), REF[0][i]);
+        CPPUNIT_ASSERT_EQUAL(Br(i+1), REF[0][i]);
     }
 
 
@@ -692,12 +702,14 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     // Determinant for 1x1 Matrix
     CPPUNIT_ASSERT_EQUAL(M1.determinant(), M1(1,1));
     // Determinant for 2x2 Matrix
-    CPPUNIT_ASSERT_EQUAL(M2.determinant(), M2(1,1)*M2(2,2)-M2(1,2)*M2(2,1));
+    // This was done in a lazy way comparing strings, which is the reason why this test fails when using Eigen, they're approximately equal.
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(M2.determinant(), M2(1,1)*M2(2,2)-M2(1,2)*M2(2,1),epsilon);
     // Inverse for 1x1 SymmetricMatrix
     SymmetricMatrix SM1(1);
     SM1(1,1)= 1.4;
     SymmetricMatrix SM1_inv = SM1.inverse();
-    CPPUNIT_ASSERT_EQUAL(Matrix(SM1_inv * SM1), I1);
+    Matrix tmpMat = SM1_inv * SM1;
+    CPPUNIT_ASSERT_EQUAL( approxEqual(Matrix(SM1_inv * SM1), I1, epsilon), true );
     // Inverse for 2x2 Matrix
     SymmetricMatrix SM2(2);
     SM2(1,1)= 1.4;
@@ -709,7 +721,7 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     // Determinant for 1x1 Matrix
     CPPUNIT_ASSERT_EQUAL(SM1.determinant(), SM1(1,1));
     // Determinant for 2x2 Matrix
-    CPPUNIT_ASSERT_EQUAL(SM2.determinant(), SM2(1,1)*SM2(2,2)-SM2(1,2)*SM2(2,1));
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(SM2.determinant(), SM2(1,1)*SM2(2,2)-SM2(1,2)*SM2(2,1), epsilon);
 
     Matrix M3(3,3);
     M3(1,1)=1;

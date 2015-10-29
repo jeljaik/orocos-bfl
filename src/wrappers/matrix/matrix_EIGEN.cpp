@@ -182,12 +182,12 @@ MyMatrix&
 
 MyRowVector MyMatrix::rowCopy(unsigned int r) const
 {
-  return (MyRowVector) (*this).row(r);
+  return (MyRowVector) (*this).row(r-1);
 }
 
 MyColumnVector MyMatrix::columnCopy(unsigned int c) const
 {
-  return (MyColumnVector) (*this).col(c);
+  return (MyColumnVector) (*this).col(c-1);
 }
 
 
@@ -224,7 +224,7 @@ MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
     assert(this->rows() == this->columns());
     
     // NOTE: What I'm tryin to do here is to recognize when a matrix is strictly lower or upper triangular
-    // making it symmetric accordingly.
+    // then making it symmetric accordingly.
     
     const EigenMatrix & A = (EigenMatrix &) (*this);
     EigenMatrix tmp(sym.rows(), sym.cols());
@@ -236,10 +236,9 @@ MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
     auto diagMatVirtual = Eigen::DiagonalMatrix<double, Eigen::Dynamic>(diagVec);
     EigenMatrix diagMatEigen(tmp.rows(),tmp.cols());
     diagMatVirtual.evalTo(diagMatEigen);
-    std::cout << diagMatEigen << std::endl;
     if ( (tmp - diagMatEigen).sum() == 0 )
     {
-        std::cout << "This matrix is strictly lower triangular. Symmetrizing accordingly" << std::endl;
+        //std::cout << "This matrix is strictly lower triangular. Symmetrizing accordingly" << std::endl;
         sym = MySymmetricMatrix(A.selfadjointView<Eigen::Lower>());
     } else {
         // If it's upper triangular
@@ -249,10 +248,10 @@ MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
         diagMatVirtual.evalTo(diagMatEigen);
         if ( (tmp - diagMatEigen).sum() == 0 )
         {
-            std::cout << "This matrix is strictly upper triangular. Symmetrizing accordingly"  << std::endl;
+            //std::cout << "This matrix is strictly upper triangular. Symmetrizing accordingly"  << std::endl;
             sym = MySymmetricMatrix(A.selfadjointView<Eigen::Upper>());
         } else {
-            std::cout << " This matrix will be symmetrized averaging both triangular parts" << std::endl;
+            std::cout << " [WARNING] convertToSymmetricMatrix() says: This matrix will be symmetrized averaging both triangular parts" << std::endl;
         }
     }
     return 0;
@@ -263,7 +262,6 @@ MyMatrix::resize(unsigned int i, unsigned int j, bool copy, bool initialize)
 {
     // By default not a conservative resizing but destructive, unless resizing is equivalent to transposing
   EigenMatrix & temp = (EigenMatrix &) (*this);
-    std::cout << temp << std::endl;
     if (copy)
     {
         temp = temp.block(0,0,i,j).eval();
@@ -271,7 +269,6 @@ MyMatrix::resize(unsigned int i, unsigned int j, bool copy, bool initialize)
     {
         temp.resize(i,j);
     }
-    std::cout << temp << std::endl;
 }
 
 // get sub matrix
