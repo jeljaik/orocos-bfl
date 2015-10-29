@@ -44,7 +44,7 @@ public:
   /// Constructor
   ColumnVector_Wrapper() {};
   
-  /// Constructor from yarp vector
+  /// Constructor from pointer to double
   ColumnVector_Wrapper(double* yvec, unsigned int size);
 
   /// Destructor

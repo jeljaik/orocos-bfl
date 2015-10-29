@@ -772,6 +772,23 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     copy3test(2) = M3(2,3);
     copy3test(3) = M3(3,3);
     CPPUNIT_ASSERT_EQUAL(copy3,copy3test);
+    
+    
+    // Additional tests not originally in matrix wrapper
+    // Column Vector from pointer to double
+    double test[3] = {1.0,2.0,3.0};
+    ColumnVector colFromArray(test, 3);
+    CPPUNIT_ASSERT_EQUAL(test[0], colFromArray(1));
+    CPPUNIT_ASSERT_EQUAL(test[1], colFromArray(2));
+    CPPUNIT_ASSERT_EQUAL(test[2], colFromArray(3));
+    // Quaternion tests
+    Quaternion quat(1.0,0.0,0.0,0.0);
+    ColumnVector colFromQuat(quat);
+    CPPUNIT_ASSERT_EQUAL(quat(1), colFromQuat(1));
+    CPPUNIT_ASSERT_EQUAL(quat(2), colFromQuat(2));
+    CPPUNIT_ASSERT_EQUAL(quat(3), colFromQuat(3));
+    CPPUNIT_ASSERT_EQUAL(quat(4), colFromQuat(4));
+    
 }
 
 

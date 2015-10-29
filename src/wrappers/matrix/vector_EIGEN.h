@@ -33,6 +33,11 @@ public:
   /// Constructor
   ColumnVector(const MyColumnVector& a, const MyColumnVector& b);
 
+  /// Constructor from quaternion
+    ColumnVector(MyQuaternion& quat);
+  /// Constructor from pointer to double
+  ColumnVector(double* yvec, unsigned int size);
+    
   /// Destructor
   virtual ~ColumnVector();
 

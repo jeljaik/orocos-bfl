@@ -18,6 +18,26 @@ MyColumnVector::ColumnVector(const MyColumnVector& a, const MyColumnVector& b) :
   opl.tail(b.rows()) = (const EigenColumnVector &)(b);
 }
 
+// Constructor from quaternion
+MyColumnVector::ColumnVector(MyQuaternion& quat) : EigenColumnVector(4)
+{
+    EigenColumnVector& opl = (*this);
+    // Copy elements from quaternion to column vector
+    unsigned int i;
+    for (i=0; i<4; i++)
+        opl(i) = quat(i+1);
+}
+
+// Constructor from pointer to double
+MyColumnVector::ColumnVector(double* yvec, unsigned int size) : EigenColumnVector(size)
+{
+    EigenColumnVector& opl = (*this);
+    Eigen::Map<EigenColumnVector> map(yvec, size);
+    opl = (EigenColumnVector)map;
+//    for (unsigned int i=0; i<size; i++)
+//        opl(i) = yvec[i];
+}
+
 // Destructor
 MyColumnVector::~ColumnVector(){}
 
