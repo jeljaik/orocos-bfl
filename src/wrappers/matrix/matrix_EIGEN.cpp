@@ -529,11 +529,9 @@ double& MySymmetricMatrix::operator()(unsigned int a, unsigned int b)
 double MySymmetricMatrix::operator()(unsigned int a, unsigned int b) const
 {
     const EigenSymmetricMatrix & op1(*this);
-    assert(a >= 0 && a < op1.rows());
-    assert(b >= 0 && b < op1.cols());
-    EigenSymmetricMatrix op2(op1.rows(), op1.cols());
-    op1.selfadjointView<Eigen::Lower>().evalTo(op2);
-    return op2(a-1,b-1);
+    assert(a >= 0 && a < op1.rows()+1);
+    assert(b >= 0 && b < op1.cols()+1);
+    return op1(a-1,b-1);
 }
 
 bool MySymmetricMatrix::operator==(const MySymmetricMatrix& a) const
