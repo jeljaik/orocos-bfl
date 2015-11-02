@@ -781,6 +781,13 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     CPPUNIT_ASSERT_EQUAL(test[0], colFromArray(1));
     CPPUNIT_ASSERT_EQUAL(test[1], colFromArray(2));
     CPPUNIT_ASSERT_EQUAL(test[2], colFromArray(3));
+    // SetColumn
+    Matrix mat(3,3);
+    mat = 0.0;
+    mat.setColumn(colFromArray, 1);
+    CPPUNIT_ASSERT_EQUAL(colFromArray(1), mat(1,2));
+    CPPUNIT_ASSERT_EQUAL(colFromArray(2), mat(2,2));
+    CPPUNIT_ASSERT_EQUAL(colFromArray(3), mat(3,2));
     // Quaternion tests
     Quaternion quat(1.0,0.0,0.0,0.0);
     ColumnVector colFromQuat(quat);
@@ -788,6 +795,10 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     CPPUNIT_ASSERT_EQUAL(quat(2), colFromQuat(2));
     CPPUNIT_ASSERT_EQUAL(quat(3), colFromQuat(3));
     CPPUNIT_ASSERT_EQUAL(quat(4), colFromQuat(4));
+    // Print quaternion
+    std::cout << colFromQuat << std::endl;
+    std::cout << quat << std::endl;
+    
     
 }
 

@@ -182,17 +182,17 @@ public:
     virtual ~Quaternion();
     
     /// Operators
-    double operator()(unsigned int i);
-    double operator()(unsigned int i) const;
-    virtual MyQuaternion& operator =(const MyQuaternion &q);
+    virtual double operator()(unsigned int i);
+    virtual double operator()(unsigned int i) const;
+    virtual MyQuaternion& operator=(const MyQuaternion &q);
     virtual MyQuaternion operator+ (const MyQuaternion &q) const;
     virtual MyQuaternion operator- (const MyQuaternion &q) const;
+    friend std::ostream& operator<<(std::ostream& os, const Quaternion& quat);
+    std::string toString() const;
     Quaternion normalize();
     virtual bool conjugate(MyQuaternion& output);
 };
-
-
-
+    
 }
 
 #endif

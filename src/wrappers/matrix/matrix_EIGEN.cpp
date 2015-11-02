@@ -279,6 +279,20 @@ MyMatrix MyMatrix::sub(int i_start, int i_end, int j_start , int j_end) const
   return submatrix;
 }
 
+void MyMatrix::setColumn(const MyColumnVector &b, int i) const
+{
+    EigenMatrix & op = (EigenMatrix &) *(this);
+    op.col(i) = b.col(0);
+}
+
+void MyMatrix::setColumn(MyColumnVector & b, int j)
+{
+    EigenMatrix & op = (EigenMatrix &) *(this);
+    std::cout << op << std::endl;
+    op.col(j) = b.col(0);
+    std::cout << op << std::endl;
+}
+
 /////////////////////////////
 // CLASS SYMMETRIC MATRIX  //
 /////////////////////////////

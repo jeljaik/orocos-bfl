@@ -498,6 +498,25 @@ MyQuaternion MyQuaternion::operator- (const MyQuaternion &q) const
     return (MyQuaternion) result;
 }
 
+// This binary operator<< can be declared as a friend method among the public methods
+// of class MyQuaternion (e.g. MatrixWrapper::Quaternion), but when implementing, remember
+// that it is not a member of the Quaternion and thus, the namespace MatrixWrapper must
+// be prepended.
+std::ostream& MatrixWrapper::operator<< (std::ostream& os, const MyQuaternion& quat)
+{
+    return os << quat.toString();
+}
+
+std::string MyQuaternion::toString() const
+{
+    std::ostringstream os;
+    for (int i = 0; i < 4; i++)
+    {   
+        os << (*this)(i+1) << " ";
+    }
+    return os.str();
+}
+
 MyQuaternion MyQuaternion::normalize()
 {
     EigenQuaternion& op1 = *(this);

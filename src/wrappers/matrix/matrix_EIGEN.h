@@ -85,6 +85,8 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
   virtual double determinant() const;
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
+  virtual void setColumn(const MyColumnVector &b, int i) const;
+    virtual void setColumn(MyColumnVector &b, int j);
 
 };
 

@@ -157,6 +157,10 @@ public:
 
   /// get sub matrix
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const = 0;
+    
+  /// Set column
+    virtual void setColumn(MyColumnVector &b, int j) = 0;
+  virtual void setColumn(const MyColumnVector &b, int i) const = 0;
 
   /// SVD Decomposition (for pseudo-inverse properties)
   virtual bool SVD(MyColumnVector& D, MyMatrix& U, MyMatrix& V) const ;
