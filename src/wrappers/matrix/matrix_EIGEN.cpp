@@ -10,8 +10,11 @@ using namespace std;
 
 // Passing the constructor arguments...
 MyMatrix::Matrix() : EigenMatrix() {}
-MyMatrix::Matrix(int num_rows, int num_cols) : EigenMatrix(num_rows,
-                               num_cols){}
+
+MyMatrix::Matrix(int num_rows, int num_cols) : EigenMatrix(num_rows, num_cols) {};
+
+//template <typename Derived, int num_rows, int num_cols>
+//MyMatrix::Matrix<Derived, num_rows, num_cols>() : Eigen::Matrix<Derived, num_rows, num_cols> {}
 
 // Destructor
 MyMatrix::~Matrix(){}
@@ -269,6 +272,15 @@ MyMatrix::resize(unsigned int i, unsigned int j, bool copy, bool initialize)
     {
         temp.resize(i,j);
     }
+}
+
+void MyMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end )
+{
+    EigenMatrix& tmp = (*this);
+    int num_rows = (i_end - i_start) + 1;
+    int num_cols = (j_end - j_start) + 1;
+    tmp.block(i_start-1, j_start-1, num_rows, num_cols) = b;
+    // set submatrix from Eigen done here.
 }
 
 // get sub matrix
@@ -530,7 +542,10 @@ MyMatrix MySymmetricMatrix::sub(int i_start, int i_end, int j_start , int j_end)
   return submatrix;
 }
 
-
+void MySymmetricMatrix::setSubMatrix(const MatrixWrapper::Matrix &b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end)
+{
+    
+}
 
 double& MySymmetricMatrix::operator()(unsigned int a, unsigned int b)
 {

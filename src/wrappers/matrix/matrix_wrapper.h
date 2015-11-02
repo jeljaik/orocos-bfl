@@ -40,11 +40,10 @@ class SymmetricMatrix;
 /// Class Matrixwrapper
 class Matrix_Wrapper
 {
+protected:
+    /// Constructor
+    Matrix_Wrapper() {};
 public:
-
-  /// Constructor
-  Matrix_Wrapper() {};
-
   /// Destructor
   virtual ~Matrix_Wrapper() {};
 
@@ -155,11 +154,14 @@ public:
   */
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym) = 0;
 
+  /// Set sub matrix
+  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) = 0;
+    
   /// get sub matrix
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const = 0;
     
   /// Set column
-    virtual void setColumn(MyColumnVector &b, int j) = 0;
+  virtual void setColumn(MyColumnVector &b, int j) = 0;
   virtual void setColumn(const MyColumnVector &b, int i) const = 0;
 
   /// SVD Decomposition (for pseudo-inverse properties)
@@ -289,7 +291,10 @@ public:
 
   /// get sub matrix
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const = 0;
-
+  
+  /// Set sub matrix
+  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) = 0;
+    
   /// Cholesky Decomposition for semidefinite matrices
   virtual bool cholesky_semidefinite(MyMatrix& m) const ;
 

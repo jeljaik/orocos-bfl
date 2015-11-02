@@ -26,7 +26,8 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
 
   // Constructors
   Matrix();
-  Matrix(int m, int n);
+  Matrix(int num_rows, int num_cols);
+  //template<typename Derived, int m, int n> Matrix();
 
   // Destructor
   virtual ~Matrix();
@@ -84,9 +85,10 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
   virtual MyMatrix transpose() const;
   virtual double determinant() const;
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym);
+  virtual void setSubMatrix ( const MyMatrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end );
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
   virtual void setColumn(const MyColumnVector &b, int i) const;
-    virtual void setColumn(MyColumnVector &b, int j);
+  virtual void setColumn(MyColumnVector &b, int j);
 
 };
 
@@ -160,6 +162,8 @@ class SymmetricMatrix : public EigenSymmetricMatrix, public SymmetricMatrix_Wrap
 
   virtual void resize(unsigned int i, bool copy=true, bool initialize=true);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
+  void setSubMatrix (const MyMatrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end );
+
 
 };
 

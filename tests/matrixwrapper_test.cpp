@@ -798,7 +798,14 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     // Print quaternion
     std::cout << colFromQuat << std::endl;
     std::cout << quat << std::endl;
-    
+    // setSubmatrix
+    Matrix mat2(2,2);
+    mat2 = 1.0;
+    mat.setSubMatrix(mat2, 2, 3, 2, 3);
+    CPPUNIT_ASSERT_EQUAL(mat2(1,1), mat(2,2));
+    CPPUNIT_ASSERT_EQUAL(mat2(2,1), mat(3,2));
+    CPPUNIT_ASSERT_EQUAL(mat2(1,2), mat(2,3));
+    CPPUNIT_ASSERT_EQUAL(mat2(2,2), mat(3,3));
     
 }
 
