@@ -106,8 +106,9 @@ class Matrix : public BoostMatrix, public Matrix_Wrapper
   virtual double determinant() const;
   virtual int convertToSymmetricMatrix(MySymmetricMatrix& sym);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
+  virtual void setColumn(MyColumnVector &b, int i);
   virtual void setColumn(const MyColumnVector &b, int i) const;
-  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const;
+  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end );
 //   virtual MyMatrix eye(int n);
 
 };
@@ -174,7 +175,7 @@ class SymmetricMatrix : public BoostSymmetricMatrix, public SymmetricMatrix_Wrap
 
   virtual void resize(unsigned int i, bool copy=true, bool initialize=true);
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
-  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const;
+  virtual void setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end );
 };
 
 }

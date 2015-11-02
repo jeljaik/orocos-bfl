@@ -336,16 +336,25 @@ MyMatrix MyMatrix::sub(int i_start, int i_end, int j_start , int j_end) const
   return submatrix;
 }
 
+
+void MyMatrix::setColumn ( MatrixWrapper::ColumnVector& b, int i )
+{
+    BoostMatrix& tmpThis = (BoostMatrix &) (*this);
+    //     boost::numeric::ublas::column(tmpThis,i-1) = boost::numeric::ublas::column(tmpCol,0);
+    boost::numeric::ublas::column(tmpThis,i-1) = (BoostColumnVector) b;
+    //     cout << "DEBUGGING in matrix_BOOST.cpp :" << *this << endl;
+}
+
+
 void MyMatrix::setColumn ( const MatrixWrapper::ColumnVector& b, int i ) const
 {
-    BoostColumnVector& tmpCol = (BoostColumnVector&) b;
     BoostMatrix& tmpThis = (BoostMatrix &) (*this);
 //     boost::numeric::ublas::column(tmpThis,i-1) = boost::numeric::ublas::column(tmpCol,0);
     boost::numeric::ublas::column(tmpThis,i-1) = (BoostColumnVector) b;
 //     cout << "DEBUGGING in matrix_BOOST.cpp :" << *this << endl;
 }
 
-void MyMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const 
+void MyMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end )
 {
     namespace bnu = boost::numeric::ublas;
     BoostMatrix& tmpMat = (BoostMatrix&) b;
@@ -676,7 +685,7 @@ MySymmetricMatrix::resize(unsigned int i, bool copy, bool initialize)
   temp.resize(i, copy);
 }
 
-void MySymmetricMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) const 
+void MySymmetricMatrix::setSubMatrix ( const MatrixWrapper::Matrix& b, unsigned int i_start, unsigned int i_end, unsigned int j_start, unsigned int j_end ) 
 {
     namespace bnu = boost::numeric::ublas;
     BoostMatrix& tmpMat = (BoostMatrix&) b;
