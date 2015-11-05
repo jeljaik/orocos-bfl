@@ -255,8 +255,7 @@ MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
             sym = MySymmetricMatrix(A.selfadjointView<Eigen::Upper>());
         } else {
             // A = (A + A^T)/2 mean of both triangular parts
-            Matrix tmp2 = (Matrix) sym;
-            sym = ( sym + tmp2.transpose() )*0.5;
+            sym = ( A + A.transpose() )*0.5;
         }
     }
     return 0;
