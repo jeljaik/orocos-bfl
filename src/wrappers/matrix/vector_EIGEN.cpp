@@ -527,7 +527,7 @@ bool MyQuaternion::conjugate(MyQuaternion& output)
 {
     bool ret = false;
     const EigenQuaternion &q = *(this);
-    q.conjugate();
+    output = q.conjugate();
     ret = true;
     return ret;
 }
