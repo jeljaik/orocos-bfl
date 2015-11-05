@@ -149,24 +149,36 @@ void MatrixwrapperTest::testMatrixwrapperValue()
         }
     }
 
-    Bs = 0.0;
+    SymmetricMatrix Bs2(r);
+    Bs2 = 0.0;
     // fill in upper triangle
     for (unsigned int i=0; i<r; i++)
     {
         for (unsigned int j=0; j<=i; j++)
-            Bs(j+1,i+1) = REF[i][j];
+            Bs2(j+1,i+1) = REF[i][j];
     }
     
-    symBs = (Matrix) Bs;
-    symBs.convertToSymmetricMatrix(Bs);
+    Matrix symBs2(Bs2.rows(),Bs2.columns());
+    symBs2 = (Matrix) Bs2;
+    symBs2.convertToSymmetricMatrix(Bs2);
     for (unsigned int i=0; i<r; i++)
     {
         for (unsigned int j=0; j<=i; j++)
         {
-            CPPUNIT_ASSERT_EQUAL(Bs(i+1,j+1), REF[i][j]);
-            CPPUNIT_ASSERT_EQUAL(Bs(j+1,i+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(Bs2(i+1,j+1), REF[i][j]);
+            CPPUNIT_ASSERT_EQUAL(Bs2(j+1,i+1), REF[i][j]);
         }
     }
+    
+    // Symmetrizing matrix not strictly lower or upper triangular
+    SymmetricMatrix Bs3(r);
+    for (unsigned int i=0; i<r; i++)
+    {
+        for (unsigned int j=0; j<r; j++)
+            Bs3(i+1,j+1) = REF[i][j];
+    }
+    Matrix symBs3 = (Matrix) Bs3;
+    symBs3.convertToSymmetricMatrix(Bs3);
 
     // COLUMNVECTOR
     ColumnVector Bc(r);
@@ -785,9 +797,9 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     Matrix mat(3,3);
     mat = 0.0;
     mat.setColumn(colFromArray, 1);
-    CPPUNIT_ASSERT_EQUAL(colFromArray(1), mat(1,2));
-    CPPUNIT_ASSERT_EQUAL(colFromArray(2), mat(2,2));
-    CPPUNIT_ASSERT_EQUAL(colFromArray(3), mat(3,2));
+    CPPUNIT_ASSERT_EQUAL(colFromArray(1), mat(1,1));
+    CPPUNIT_ASSERT_EQUAL(colFromArray(2), mat(2,1));
+    CPPUNIT_ASSERT_EQUAL(colFromArray(3), mat(3,1));
     // Quaternion tests
     Quaternion quat(1.0,0.0,0.0,0.0);
     ColumnVector colFromQuat(quat);
@@ -796,8 +808,6 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     CPPUNIT_ASSERT_EQUAL(quat(3), colFromQuat(3));
     CPPUNIT_ASSERT_EQUAL(quat(4), colFromQuat(4));
     // Print quaternion
-    std::cout << colFromQuat << std::endl;
-    std::cout << quat << std::endl;
     // setSubmatrix
     Matrix mat2(2,2);
     mat2 = 1.0;

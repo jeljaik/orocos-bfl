@@ -40,7 +40,7 @@ namespace MatrixWrapper{
         /// Destructor
         virtual ~Quaternion_Wrapper() {};
         /// Operators
-        virtual double operator()(unsigned int i) = 0;
+        virtual double& operator()(unsigned int i) = 0;
         virtual double operator()(unsigned int i) const = 0;
         // Others
         virtual MyQuaternion normalize() = 0;

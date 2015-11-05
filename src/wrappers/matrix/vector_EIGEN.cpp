@@ -424,7 +424,7 @@ MyQuaternion::Quaternion( const MyQuaternion & q ) : EigenQuaternion( q ) { }
 MyQuaternion::Quaternion( const EigenQuaternion & q ) : EigenQuaternion( q ) { }
 
 // Operators
-double MyQuaternion::operator()( unsigned int i )
+double& MyQuaternion::operator()( unsigned int i )
 {
     EigenQuaternion & op1 = *(this);
     switch (i) {

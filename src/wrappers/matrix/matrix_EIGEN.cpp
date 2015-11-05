@@ -224,7 +224,7 @@ int
 MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
 {
     // test if matrix is square matrix
-    assert(this->rows() == this->columns());
+    assert(this->rows() == this->columns() && "[MyMatrix::convertToSymmetricMatrix] The matrix is not squared.");
     
     // NOTE: What I'm tryin to do here is to recognize when a matrix is strictly lower or upper triangular
     // then making it symmetric accordingly.
@@ -254,7 +254,9 @@ MyMatrix::convertToSymmetricMatrix(MySymmetricMatrix& sym)
             //std::cout << "This matrix is strictly upper triangular. Symmetrizing accordingly"  << std::endl;
             sym = MySymmetricMatrix(A.selfadjointView<Eigen::Upper>());
         } else {
-            std::cout << " [WARNING] convertToSymmetricMatrix() says: This matrix will be symmetrized averaging both triangular parts" << std::endl;
+            // A = (A + A^T)/2 mean of both triangular parts
+            Matrix tmp2 = (Matrix) sym;
+            sym = ( sym + tmp2.transpose() )*0.5;
         }
     }
     return 0;
@@ -294,15 +296,13 @@ MyMatrix MyMatrix::sub(int i_start, int i_end, int j_start , int j_end) const
 void MyMatrix::setColumn(const MyColumnVector &b, int i) const
 {
     EigenMatrix & op = (EigenMatrix &) *(this);
-    op.col(i) = b.col(0);
+    op.col(i-1) = b.col(0);
 }
 
 void MyMatrix::setColumn(MyColumnVector & b, int j)
 {
     EigenMatrix & op = (EigenMatrix &) *(this);
-    std::cout << op << std::endl;
-    op.col(j) = b.col(0);
-    std::cout << op << std::endl;
+    op.col(j-1) = b.col(0);
 }
 
 /////////////////////////////
