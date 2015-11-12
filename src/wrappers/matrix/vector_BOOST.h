@@ -190,7 +190,7 @@ public:
     virtual ~Quaternion();
     
     /// Operators
-    double operator()(unsigned int i);
+    double& operator()(unsigned int i);
     double operator()(unsigned int i) const;
     virtual MyQuaternion& operator =(const MyQuaternion &q);
     virtual MyQuaternion operator+ (const MyQuaternion &q) const;

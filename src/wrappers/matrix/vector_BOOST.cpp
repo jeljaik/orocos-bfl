@@ -486,17 +486,18 @@ BoostQuaternion(q){}
 
 
 // Operator ()
-double MyQuaternion::operator()(unsigned int i)
+double& MyQuaternion::operator()(unsigned int i)
 {
-    BoostQuaternion& op1 = *(this);
+    //BoostQuaternion& op1 = *(this);
+    // Accessing the variables defiend by BOOST_QUATERNION_MEMBER_DATA_GENERATOR( type )
     if (i == 1)
-        return op1.R_component_1();
+        return a;
     if (i == 2)
-        return op1.R_component_2();
+        return b;
     if (i == 3)
-        return op1.R_component_3();
+        return c;
     if (i == 4)
-        return op1.R_component_4();
+        return d;
 }
 
 // Operator ()
