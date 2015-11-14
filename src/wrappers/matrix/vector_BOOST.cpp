@@ -488,7 +488,8 @@ BoostQuaternion(q){}
 // Operator ()
 double& MyQuaternion::operator()(unsigned int i)
 {
-    //BoostQuaternion& op1 = *(this);
+    BoostQuaternion& op1 = *(this);
+    assert(i <= 4 && i>=1 && "Index must be between 1 and 4.");
     // Accessing the variables defiend by BOOST_QUATERNION_MEMBER_DATA_GENERATOR( type )
     if (i == 1)
         return a;
@@ -504,6 +505,7 @@ double& MyQuaternion::operator()(unsigned int i)
 double MyQuaternion::operator()(unsigned int i) const
 {
     const BoostQuaternion& op1 = *(this);
+    assert(i <= 4 && i >=1 && "Index must be between 1 and 4.");
     if (i == 1)
         return op1.R_component_1();
     if (i == 2)
