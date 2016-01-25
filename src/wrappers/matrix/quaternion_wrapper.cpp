@@ -32,20 +32,19 @@ namespace MatrixWrapper {
     }
     
     bool Quaternion_Wrapper::getRotation ( MatrixWrapper::Matrix& Q ) {
-        
+    
         bool ret = true;
         if (Q.rows() != 3 && Q.columns() != 3) {
             std::cout << " ERROR [quaternion_wrapper.cpp] Rotation matrix passed to this method must be 3x3" << std::endl;
             ret = false;
         }
-        double q0 = (*this)(1);
-        double q1 = (*this)(2);
-        double q2 = (*this)(3);
-        double q3 = (*this)(4);
         
-        Q(1,1) = 2*(q0*q0 + q1*q1) - 1; Q(1,2) = 2*(q1*q2 - q0*q3)     ; Q(1,3) = 2*(q1*q3 + q0*q2)    ;
-        Q(2,1) = 2*(q1*q2 + q0*q3)    ; Q(2,2) = 2*(q0*q0 + q2*q2) - 1 ; Q(2,3) = 2*(q2*q3 - q0*q1)    ;
-        Q(3,1) = 2*(q1*q3 - q0*q2)    ; Q(3,2) = 2*(q2*q3 + q0*q1)     ; Q(3,3) = 2*(q0*q0 + q3*q3) - 1;
+        // Using Eigen native methods
+        Eigen::Matrix3d m = (*(MyQuaternion*)this).toRotationMatrix();
+//        std::cerr << "[Quaternion_wrapper::getRotation] Rotation matrix from quaternion is: " << m << std::endl;
+        MatrixWrapper::Matrix tmp((EigenMatrix) m);
+        Q = tmp;        
+//        std::cerr << "[Quaternion_wrapper::getRotation] Rotation matrix old style is: " << Q << std::endl;
         
         return ret;
     }

@@ -27,6 +27,7 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
   // Constructors
   Matrix();
   Matrix(int num_rows, int num_cols);
+  Matrix(double * data);
   //template<typename Derived, int m, int n> Matrix();
 
   // Destructor
@@ -38,7 +39,7 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
 
   Matrix(int num_rows,const RowVector& v);
 
-  
+
   virtual unsigned int size() const;
   virtual unsigned int capacity() const;
   virtual unsigned int rows() const;

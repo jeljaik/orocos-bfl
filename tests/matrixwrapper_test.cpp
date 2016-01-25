@@ -816,6 +816,12 @@ void MatrixwrapperTest::testMatrixwrapperValue()
     CPPUNIT_ASSERT_EQUAL(mat2(2,1), mat(3,2));
     CPPUNIT_ASSERT_EQUAL(mat2(1,2), mat(2,3));
     CPPUNIT_ASSERT_EQUAL(mat2(2,2), mat(3,3));
+    // Create matrix from double *
+    double m[9] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Matrix matFromDouble(m);
+    for (unsigned int i =0 ; i < 9; i++)
+        cout << " " << m[i] << endl;
+    cout << "matFromDouble: " << matFromDouble << endl;
     
 }
 

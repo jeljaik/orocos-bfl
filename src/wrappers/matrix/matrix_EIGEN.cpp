@@ -13,6 +13,20 @@ MyMatrix::Matrix() : EigenMatrix() {}
 
 MyMatrix::Matrix(int num_rows, int num_cols) : EigenMatrix(num_rows, num_cols) {};
 
+MyMatrix::Matrix(double * data)
+{
+    unsigned int k = 0;
+    EigenMatrix & m = *this;
+    for (unsigned int i=0; i < m.rows(); i++)
+    {
+        for (unsigned int j=0; i < j < m.cols(); j++)
+              {
+                  m(i,j) = data[k];
+                  k++;
+              }
+    }
+}
+
 //template <typename Derived, int num_rows, int num_cols>
 //MyMatrix::Matrix<Derived, num_rows, num_cols>() : Eigen::Matrix<Derived, num_rows, num_cols> {}
 
