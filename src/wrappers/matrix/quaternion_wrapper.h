@@ -59,6 +59,10 @@ namespace MatrixWrapper{
         virtual bool getRotation(MatrixWrapper::Matrix& output);
         
         virtual bool conjugate(MyQuaternion& output) = 0;
+        
+        virtual void quaternion2euler (double res[], std::string axes);
+        
+        virtual void threeaxisrot(double r11, double r12, double r21, double r31, double r32, double res[]);
     }; // enf of Quaternion_Wrapper class
 } // end MatrixWrapper namespace
 
