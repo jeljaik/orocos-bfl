@@ -13,61 +13,29 @@ namespace MatrixWrapper {
             ret = false;
         else {
             if (!axes.compare("xyz")) {
-                double r = quat(1);
-                double x = quat(2);
-                double y = quat(3);
-                double z = quat(4);
-                
-                cout << "Real part: " << r << " From Eigen: " << quat.w() << endl;
-                
-                //NOTE Reference 2 From quaternion to Euler Angles, when moving from the inertial frame to the body frame rotating first yaw, then pitch and finally roll http://www.chrobotics.com/library/understanding-quaternions
-                output(1) = atan2( 2*y*z + 2*x*r , (1 - 2*pow(x,2) - 2*pow(y,2)) );
-                output(2) = asin( -2*x*z + 2*y*r);
-                output(3) = atan2( 2*x*y + 2*z*r , (1 - 2*pow(y,2) - 2*pow(z,2)) );
-                
-                // Using REF: http://bediyap.com/programming/convert-quaternion-to-euler-rotations/
-                // This should coincide with Eigen as per my tests
-//                output(1) = atan2(-2*x*y + 2*z*r, 1 - 2*pow(y,2) - 2*pow(z,2));
-//                output(2) = asin( 2*x*z + 2*y*r);
-//                output(3) = atan2(-2*z*y + 2*x*r, 1 - 2*pow(x,2) - 2*pow(y,2));
-                
-                std::cerr << "Current quaternion: " << std::endl << quat << std::endl;
-
-                
-                Eigen::Matrix3f matRec;
-                matRec = Eigen::AngleAxisf(output(1), Eigen::Vector3f::UnitX())
-                       * Eigen::AngleAxisf(output(2), Eigen::Vector3f::UnitY())
-                       * Eigen::AngleAxisf(output(3), Eigen::Vector3f::UnitZ());
-                
-                Eigen::Matrix3d m = quat.toRotationMatrix();
-                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Rotation Matrix reconstructed from my euler angles: " << std::endl << matRec << std::endl;
-                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Rotation Matrix using Eigen" << std::endl << m <<  std::endl;
-                Eigen::Vector3d euler = m.eulerAngles(0, 1, 2);
-                
-//                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Computation through Eigen: " << euler << std::endl;
-                
-                // Reconstructing rotation matrix
-                Eigen::Matrix3f rec;
-                rec = Eigen::AngleAxisf(euler[0], Eigen::Vector3f::UnitX())
-                    * Eigen::AngleAxisf(euler[1], Eigen::Vector3f::UnitY())
-                    * Eigen::AngleAxisf(euler[2], Eigen::Vector3f::UnitZ());
-//                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Reconstructed rotation matrix: " << std::endl << rec << std::endl;
-//                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Error in rotation matrices : " << std::endl << rec.cast<double>() - m << std::endl;
-                MatrixWrapper::ColumnVector tmp(euler.data(), 3);
-//                std::cerr << "[Quaternion_Wrapper::getEulerAngles] Eigen Vector  : " << std::endl << euler << std::endl;
-//                output  = tmp;
-                
-                
-                
-                
                 // New tests
-                std::cerr << "[NEW_TEST] Current quaternion: " << quat << endl;
-                m = quat.toRotationMatrix();
-                euler = m.eulerAngles(0, 1, 2);
-                std::cerr << "[NEW_TEST] EIGEN (Deg): roll(x): " << (180/M_PI)*euler(0) << " pitch(y): " << (180/M_PI)*euler(1) << " yaw(z): " << (180/M_PI)*euler(2) << endl;
-//                MatrixWrapper::ColumnVector resMW(*res);
+//                std::cerr << "[NEW_TEST] Current quaternion: " << quat << endl;
+                Eigen::Matrix3d m = quat.toRotationMatrix();
+                Eigen::Vector3d euler = m.eulerAngles(2, 1, 0);
+//                std::cerr << "[NEW_TEST] EIGEN (2,1,0) (Deg): roll(x): " << (180/M_PI)*euler(2) << " pitch(y): " << (180/M_PI)*euler(1) << " yaw(z): " << (180/M_PI)*euler(0) << endl;
                 MatrixWrapper::ColumnVector resQuat(euler.data(),3);
 //                output = resMW;
+                // Inverting roll and yaw, because the transformation was 2, 1, 0, thus euler(0) is yaw, euler(1) pitch and euler(2) but my output is always roll, pitch, yaw
+                double tmpYaw = resQuat(1);
+                resQuat(1) = resQuat(3);
+                resQuat(3) = tmpYaw;
+                
+                // This is necessary since when the quaternion is close to the identity "jumps" of (+/-)180 can be experienced in the converted Euler angles.
+                double tolDiff = (M_PI/180)*(20);
+                if ( abs(resQuat(1) - output(1)) > tolDiff )
+                {
+                    resQuat(1) = output(1);
+                }
+                if ( abs(resQuat(2) - output(2)) > tolDiff )
+                {
+                    resQuat(2) = output(2);
+                }
+
                 output = resQuat;
                 ret = true;
             } else
