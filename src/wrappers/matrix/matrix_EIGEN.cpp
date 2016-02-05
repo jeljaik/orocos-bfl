@@ -304,6 +304,23 @@ void MyMatrix::setColumn(MyColumnVector & b, int j)
     op.col(j-1) = b.col(0);
 }
 
+void MyMatrix::eulerToRotation ( double roll, double pitch, double yaw ) {
+    EigenMatrix & op = (EigenMatrix &) *(this);
+    Eigen::Matrix3d m;
+    m = Eigen::AngleAxisd(  roll*(M_PI/180), Eigen::Vector3d::UnitX())
+    * Eigen::AngleAxisd( pitch*(M_PI/180), Eigen::Vector3d::UnitY())
+    * Eigen::AngleAxisd(   yaw*(M_PI/180), Eigen::Vector3d::UnitZ());
+    
+    op = m;
+//    op(1,1) = m(0); op(1,2) = m(3); op(1,3) = m(6);
+//    op(2,1) = m(1); op(2,2) = m(4); op(2,3) = m(7);
+//    op(3,1) = m(2); op(3,2) = m(5); op(3,3) = m(8);
+    
+//    cout << "Rotation matrix for roll: " << roll << " pitch: " << pitch << " yaw: " << endl;
+//    cout << m << endl;
+    
+}
+
 /////////////////////////////
 // CLASS SYMMETRIC MATRIX  //
 /////////////////////////////

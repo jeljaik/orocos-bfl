@@ -89,7 +89,7 @@ class Matrix : public EigenMatrix, public Matrix_Wrapper
   virtual MyMatrix sub(int i_start, int i_end, int j_start , int j_end) const;
   virtual void setColumn(const MyColumnVector &b, int i) const;
   virtual void setColumn(MyColumnVector &b, int j);
-
+    virtual void eulerToRotation ( double roll, double pitch, double yaw );
 };
 
 class SymmetricMatrix : public EigenSymmetricMatrix, public SymmetricMatrix_Wrapper
